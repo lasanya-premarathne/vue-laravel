@@ -38,8 +38,15 @@ class CategoryController extends Controller
             'description'=>'nullable|string'
         ]);
 
-        $category->update($data);
+        $category->update($data); // some predefined functin
 
         return redirect(route('category.index'))->with('success','Category updated successfully');
     }
+
+    public function deleteCategory(Category $category){
+        $category->delete();
+    
+        return redirect(route('category.index'))->with('success', 'Category deleted successfully');
+    }
+    
 }

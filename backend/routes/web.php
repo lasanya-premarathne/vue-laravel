@@ -18,8 +18,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/category',[CategoryController::class,'index'])->name('category.index');
-Route::get('/category/create',[CategoryController::class,'create'])->name('category.create');
-Route::post('/category/postCategory',[CategoryController::class,'postCategory'])->name('category.postCategory');
-Route::get('/category/{category}/edit',[CategoryController::class,'edit'])->name('category.edit');
-Route::put('/category/{category}/updateCategory',[CategoryController::class,'updateCategory'])->name('category.updateCategory');
+Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
+Route::get('/category/create', [CategoryController::class, 'create'])->name('category.create'); // view url
+Route::post('/category/postCategory', [CategoryController::class, 'postCategory'])->name('category.postCategory'); // button action
+Route::get('/category/{category}/edit', [CategoryController::class, 'edit'])->name('category.edit'); // view url
+Route::put('/category/{category}/updateCategory', [CategoryController::class, 'updateCategory'])->name('category.updateCategory'); // button action
+Route::delete('/category/{category}/deleteCategory', [CategoryController::class, 'deleteCategory'])->name('category.deleteCategory'); // button action
