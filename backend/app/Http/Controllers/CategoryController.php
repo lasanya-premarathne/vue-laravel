@@ -23,8 +23,23 @@ class CategoryController extends Controller
             'description'=>'nullable|string'
         ]);
 
-        $newCategory = Category::create($data);
+        Category::create($data);
 
-        return redirect(route('category.index'));
+        return redirect(route('category.index'))->with('success','Category created successfully');
+    }
+
+    public function edit(Category $category){
+        return view('category.edit',['category'=>$category]);
+    }
+
+    public function updateCategory(Category $category, Request $request){
+        $data=$request->validate([
+            'name'=>'required',
+            'description'=>'nullable|string'
+        ]);
+
+        $category->update($data);
+
+        return redirect(route('category.index'))->with('success','Category updated successfully');
     }
 }

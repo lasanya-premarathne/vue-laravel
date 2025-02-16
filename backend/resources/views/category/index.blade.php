@@ -6,18 +6,29 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Category</h1>
+    <h1>Category->View</h1>
+    <div>
+        @if(session()->has('success'))
+        <div>
+            {{session('success')}}
+        </div>
+        @endif
+    </div>
     <table border="1">
         <tr>
             <th>ID</th>
             <th>Name</th>
             <th>Description</th>
+            <th>Edit</th>
         </tr>
         @foreach ($categories as $category)
         <tr>
             <td>{{$category->id}}</td>
             <td>{{$category->name}}</td>
             <td>{{$category->description}}</td>
+            <td>
+                <a href="{{ route('category.edit', ['category' => $category->id]) }}">Edit</a>
+            </td>
         </tr>
         @endforeach
     </table>
