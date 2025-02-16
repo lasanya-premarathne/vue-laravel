@@ -17,7 +17,7 @@ class CategoryController extends Controller
         return view('category.create');
     }
 
-    public function postProduct(Request $request){
+    public function postCategory(Request $request){
         $data=$request->validate([
             'name'=>'required',
             'description'=>'nullable|string'
