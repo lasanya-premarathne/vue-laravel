@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // import HelloWorld from './components/HelloWorld.vue'
-import AdminLayout from './components/AdminLayout.vue'
+// import AdminLayout from './components/AdminLayout.vue'
 
 </script>
 
