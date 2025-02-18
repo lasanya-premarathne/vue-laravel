@@ -1,30 +1,36 @@
 <script setup>
-    import { ref, onMounted } from 'vue';
-    import axios from 'axios';
-    import CategoryTable from './components/CategoryTable.vue';
+import { ref, onMounted } from 'vue';
+import axios from 'axios';
+import CategoryTable from './components/CategoryTable.vue';
+import CreateCategory from './components/CreateCategory.vue';
 
-    const categories = ref([]);
+const categories = ref([]);
 
-    // api integration
-    const fetchCategories = async () => {
-    try {
-        const response = await axios.get('/category/getAll');
-        categories.value = response.data;
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-    }
-    };
+// api integration
+const fetchCategories = async () => {
+try {
+    const response = await axios.get('/category/getAll');
+    categories.value = response.data;
+} catch (error) {
+    console.error("Error fetching categories:", error);
+}
+};
 
-    // to load on render
-    onMounted(fetchCategories);
+// to load on render
+onMounted(fetchCategories);
+
+const handleCategoryAdded = () => {
+    fetchCategories();
+};
 </script>
 
 <template>
     <div class="container mt-4">
         <h1 class="text-primary">Category View</h1>
 
+        <CreateCategory @category-added="handleCategoryAdded" />
+
         <CategoryTable :categories="categories" @refresh="fetchCategories" />
-        
     </div>
 </template>
 
