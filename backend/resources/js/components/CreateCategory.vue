@@ -1,36 +1,60 @@
 <script setup>
-import { ref, defineEmits } from 'vue';
+import { ref, defineEmits, watchEffect } from 'vue';
 import axios from 'axios';
+
+const props = defineProps({
+    category: Object,
+});
+
 
 const name = ref('');
 const description = ref('');
-const emit = defineEmits(['category-added']);
+const emit = defineEmits(['category-saved']);
 
-const addCategory = async () => {
+watchEffect(() => {
+    if (props.category) {
+        name.value = props.category.name || '';
+        description.value = props.category.description || '';
+    }
+});
+
+const saveCategory = async () => {
     try {
-        await axios.post('/category/postCategory', {
-            name: name.value,
-            description: description.value
-        });
+        if (props.category?.id) {
+            // Update existing category
+            await axios.put(`/category/${props.category.id}/updateCategory`, {
+                name: name.value,
+                description: description.value
+            });
+        } else {
+            // Create new category
+            await axios.post('/category/postCategory', {
+                name: name.value,
+                description: description.value
+            });
+        }
+        
         name.value = '';
         description.value = '';
-        emit('category-added');
+        emit('category-saved'); // Notify parent
     } catch (error) {
-        console.error("Error adding category:", error);
+        console.error("Error saving category:", error);
     }
 };
 </script>
 
 <template>
-    <form @submit.prevent="addCategory" class="mb-4">
+    <form @submit.prevent="saveCategory" class="mb-4">
         <div class="mb-3">
             <label class="form-label">Category Name</label>
             <input v-model="name" type="text" class="form-control" required />
         </div>
         <div class="mb-3">
             <label class="form-label">Description</label>
-            <input v-model="description" type="text" class="form-control" required />
+            <input v-model="description" type="text" class="form-control" />
         </div>
-        <button type="submit" class="btn btn-primary">Add Category</button>
+        <button type="submit" class="btn btn-primary">
+            {{ category?.id ? 'Update' : 'Add' }} Category
+        </button>
     </form>
 </template>
