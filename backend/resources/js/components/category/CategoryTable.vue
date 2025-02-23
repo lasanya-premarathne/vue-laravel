@@ -1,9 +1,9 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
-import axios from 'axios';
+import { defineProps, defineEmits } from "vue";
+import axios from "axios";
 
 const props = defineProps({
-    categories: Array
+    categories: Array,
 });
 
 const emit = defineEmits(["refresh", "edit-category"]);
@@ -40,8 +40,18 @@ const editCategory = (category) => {
                 <td>{{ category.name }}</td>
                 <td>{{ category.description }}</td>
                 <td>
-                    <button @click="editCategory(category)" class="btn btn-warning btn-sm">Edit</button>
-                    <button @click="deleteCategory(category.id)" class="btn btn-danger btn-sm">Delete</button>
+                    <button
+                        @click="editCategory(category)"
+                        class="btn btn-warning btn-sm"
+                    >
+                        Edit
+                    </button>
+                    <button
+                        @click="deleteCategory(category.id)"
+                        class="btn btn-danger btn-sm"
+                    >
+                        Delete
+                    </button>
                 </td>
             </tr>
         </tbody>

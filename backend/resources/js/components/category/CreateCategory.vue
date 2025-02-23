@@ -1,20 +1,19 @@
 <script setup>
-import { ref, defineEmits, watchEffect } from 'vue';
-import axios from 'axios';
+import { ref, defineEmits, watchEffect } from "vue";
+import axios from "axios";
 
 const props = defineProps({
     category: Object,
 });
 
-
-const name = ref('');
-const description = ref('');
-const emit = defineEmits(['category-saved']);
+const name = ref("");
+const description = ref("");
+const emit = defineEmits(["category-saved"]);
 
 watchEffect(() => {
     if (props.category) {
-        name.value = props.category.name || '';
-        description.value = props.category.description || '';
+        name.value = props.category.name || "";
+        description.value = props.category.description || "";
     }
 });
 
@@ -24,19 +23,19 @@ const saveCategory = async () => {
             // Update existing category
             await axios.put(`/api/category/${props.category.id}`, {
                 name: name.value,
-                description: description.value
+                description: description.value,
             });
         } else {
             // Create new category
-            await axios.post('/api/category', {
+            await axios.post("/api/category", {
                 name: name.value,
-                description: description.value
+                description: description.value,
             });
         }
-        
-        name.value = '';
-        description.value = '';
-        emit('category-saved'); // Notify parent
+
+        name.value = "";
+        description.value = "";
+        emit("category-saved"); // Notify parent
     } catch (error) {
         console.error("Error saving category:", error);
     }
@@ -54,7 +53,7 @@ const saveCategory = async () => {
             <input v-model="description" type="text" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">
-            {{ category?.id ? 'Update' : 'Add' }} Category
+            {{ category?.id ? "Update" : "Add" }} Category
         </button>
     </form>
 </template>

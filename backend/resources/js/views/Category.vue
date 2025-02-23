@@ -1,8 +1,8 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import CategoryTable from "../components/CategoryTable.vue";
-import CreateCategory from "../components/CreateCategory.vue";
+import CategoryTable from "../components/category/CategoryTable.vue";
+import CreateCategory from "../components/category/CreateCategory.vue";
 
 const categories = ref([]);
 const selectedCategory = ref(null);
