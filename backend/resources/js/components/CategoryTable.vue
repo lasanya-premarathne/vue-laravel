@@ -11,7 +11,7 @@ const emit = defineEmits(["refresh", "edit-category"]);
 const deleteCategory = async (id) => {
     if (confirm("Are you sure you want to delete this category?")) {
         try {
-            await axios.delete(`/category/${id}/deleteCategory`);
+            await axios.delete(`/api/category/${id}`);
             emit("refresh"); // Reload categories
         } catch (error) {
             console.error("Error deleting category:", error);

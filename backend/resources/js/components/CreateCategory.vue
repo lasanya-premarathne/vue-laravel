@@ -22,13 +22,13 @@ const saveCategory = async () => {
     try {
         if (props.category?.id) {
             // Update existing category
-            await axios.put(`/category/${props.category.id}/updateCategory`, {
+            await axios.put(`/api/category/${props.category.id}`, {
                 name: name.value,
                 description: description.value
             });
         } else {
             // Create new category
-            await axios.post('/category/postCategory', {
+            await axios.post('/api/category', {
                 name: name.value,
                 description: description.value
             });
