@@ -7,6 +7,7 @@ import Footer from "@/components/mainLayout/Footer.vue";
 const menuItems = ref([
     { label: "Dashboard", path: "/" },
     { label: "Categories", path: "/category" },
+    { label: "Products", path: "/product" },
 ]);
 </script>
 

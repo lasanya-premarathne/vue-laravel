@@ -45,11 +45,11 @@ const saveCategory = async () => {
 <template>
     <form @submit.prevent="saveCategory" class="mb-4">
         <div class="mb-3">
-            <label class="form-label">Category Name</label>
+            <label class="form-label" for="category-name">Category Name</label>
             <input v-model="name" type="text" class="form-control" required />
         </div>
         <div class="mb-3">
-            <label class="form-label">Description</label>
+            <label class="form-label" for="category-description">Description</label>
             <input v-model="description" type="text" class="form-control" />
         </div>
         <button type="submit" class="btn btn-primary">

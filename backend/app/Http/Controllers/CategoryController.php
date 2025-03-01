@@ -11,20 +11,24 @@ use Exception;
 class CategoryController extends Controller
 {
     // to render the blades
-    public function index(){
+    public function index()
+    {
         return view('category.index');
     }
 
-    public function create(){
+    public function create()
+    {
         return view('category.create');
     }
-    
-    public function edit(Category $category){
-        return view('category.edit',['category'=>$category]);
+
+    public function edit(Category $category)
+    {
+        return view('category.edit', ['category' => $category]);
     }
-    
+
     // apis
-    public function getCategories() {
+    public function getCategories()
+    {
         try {
             $categories = Category::all();
             return response()->json($categories);
@@ -33,7 +37,8 @@ class CategoryController extends Controller
         }
     }
 
-    public function postCategory(Request $request) {
+    public function postCategory(Request $request)
+    {
         try {
             $data = $request->validate([
                 'name' => 'required',
@@ -41,6 +46,7 @@ class CategoryController extends Controller
             ]);
 
             Category::create($data);
+            
             return response()->json(['message' => 'Category created successfully']);
         } catch (ValidationException $e) {
             return response()->json(['error' => 'Validation failed', 'details' => $e->errors()], 422);
@@ -49,7 +55,8 @@ class CategoryController extends Controller
         }
     }
 
-    public function updateCategory(Category $category, Request $request) {
+    public function updateCategory(Category $category, Request $request)
+    {
         try {
             $data = $request->validate([
                 'name' => 'required',
@@ -66,7 +73,8 @@ class CategoryController extends Controller
         }
     }
 
-    public function deleteCategory(Category $category) {
+    public function deleteCategory(Category $category)
+    {
         try {
             $category->delete();
             return response()->json(['message' => 'Category deleted successfully']);
@@ -75,4 +83,3 @@ class CategoryController extends Controller
         }
     }
 }
- 
