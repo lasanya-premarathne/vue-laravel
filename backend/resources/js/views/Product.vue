@@ -2,6 +2,7 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 import ProductForm from "../components/product/ProductForm.vue";
+import ProductTable from "../components/product/ProductTable.vue";
 
 const products = ref([]);
 const selectedProduct = ref(null);
@@ -66,9 +67,8 @@ onMounted(fetchCategories);
 
 <template>
     <div class="container">
-
-         <div class="d-flex justify-content-between align-items-center mb-4">
-            <h1 class="text-primary">Category View</h1>
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="text-primary">Product View</h1>
             <button class="btn btn-primary" @click="handleAddNew">
                 Add New Product
             </button>
@@ -103,41 +103,13 @@ onMounted(fetchCategories);
                 </div>
             </div>
         </Transition>
-        <div class="table-responsive">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Price</th>
-                        <th>Description</th>
-                        <th>Category</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr v-for="product in products" :key="product.id">
-                        <td>{{ product.name }}</td>
-                        <td>${{ product.unit_price }}</td>
-                        <td>{{ product.description }}</td>
-                        <td>{{ getCategoryName(product.category_id) }}</td>
-                        <td>
-                            <button 
-                                @click="editProduct(product)"
-                                class="btn btn-sm btn-primary me-2"
-                            >
-                                Edit
-                            </button>
-                            <button 
-                                @click="deleteProduct(product.id)"
-                                class="btn btn-sm btn-danger"
-                            >
-                                Delete
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+
+        <ProductTable 
+            :products="products"
+            :categories="categories"
+            @edit="editProduct"
+            @delete="deleteProduct"
+        />
     </div>
 </template>
 
