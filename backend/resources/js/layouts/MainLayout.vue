@@ -8,6 +8,7 @@ const menuItems = ref([
     { label: "Dashboard", path: "/" },
     { label: "Categories", path: "/category" },
     { label: "Products", path: "/product" },
+    { label: "Orders", path: "/order" },
 ]);
 </script>
 
