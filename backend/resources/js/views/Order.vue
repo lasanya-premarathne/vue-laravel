@@ -11,7 +11,7 @@ const isModalOpen = ref(false);
 
 const fetchOrders = async () => {
     try {
-        const response = await axios.get('/api/orders');
+        const response = await axios.get('/api/order');
         orders.value = response.data;
     } catch (error) {
         console.error('Error fetching orders:', error);
@@ -36,7 +36,7 @@ const deleteOrder = async (orderId) => {
     if (!confirm('Are you sure you want to delete this order?')) return;
     
     try {
-        await axios.delete(`/api/orders/${orderId}`);
+        await axios.delete(`/api/order/${orderId}`);
         await fetchOrders();
     } catch (error) {
         console.error('Error deleting order:', error);

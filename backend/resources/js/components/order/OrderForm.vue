@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed } from 'vue';
 import OrderItemRow from './OrderItemRow.vue';
+import axios from "axios";
 
 const props = defineProps({
     products: {
@@ -34,15 +35,17 @@ const removeItem = (index) => {
 const saveOrder = async () => {
     try {
         const orderData = {
-            customerName: customerName.value,
-            contactNo: contactNo.value,
-            items: items.value,
-            totalAmount: totalAmount.value
+            customer_name: customerName.value,
+            contact_number: contactNo.value,
+            order_items: items.value.map(item => ({
+                product_id: item.productId,  // Ensure the key matches the backend expectation
+                quantity: item.quantity,
+            })),
         };
 
         const url = props.order 
-            ? `/api/orders/${props.order.id}`
-            : '/api/orders';
+            ? `/api/order/${props.order.id}`
+            : '/api/order';
         
         const method = props.order ? 'put' : 'post';
         

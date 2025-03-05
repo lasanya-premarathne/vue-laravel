@@ -18,7 +18,7 @@ const menuItems = ref([
         <div class="content-wrapper">
             <MenuBar :menuItems="menuItems" />
             <main class="main-content">
-                <router-view></router-view>
+                <router-view :key="$route.fullPath"></router-view>
             </main>
         </div>
         <Footer />
