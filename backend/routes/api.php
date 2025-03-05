@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,3 +32,10 @@ Route::get('/product', [ProductController::class, 'getProducts']);
 Route::post('/product', [ProductController::class, 'postProduct']);
 Route::put('/product/{product}', [ProductController::class, 'updateProduct']);
 Route::delete('/product/{product}', [ProductController::class, 'deleteProduct']);
+
+// order API endpoints
+Route::get('/order', [OrderController::class, 'getAllOrders']);
+Route::post('/order', [OrderController::class, 'postOrder']);
+Route::get('/order/{order}', [OrderController::class, 'getOrder']);
+Route::put('/order/{order}', [OrderController::class, 'updateOrder']);
+Route::delete('/order/{order}', [OrderController::class, 'deleteOrder']);
