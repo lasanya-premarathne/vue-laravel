@@ -1,31 +1,52 @@
 <script setup>
-import { ref, computed } from 'vue';
-import OrderItemRow from './OrderItemRow.vue';
+import { ref, computed, watchEffect } from "vue";
+import OrderItemRow from "./OrderItemRow.vue";
 import axios from "axios";
 
 const props = defineProps({
     products: {
         type: Array,
-        required: true
+        required: true,
     },
     order: {
         type: Object,
-        default: null
+        default: null,
+    },
+});
+
+const emit = defineEmits(["order-saved"]);
+
+const customerName = ref("");
+const contactNo = ref("");
+const items = ref([{ productId: "", quantity: 1, total: 0 }]);
+
+watchEffect(() => {
+    if (props.order) {
+        customerName.value = props.order.customer_name || "";
+        contactNo.value = props.order.contact_number || "";
+        items.value = props.order.order_items.map((item) => {
+            const product = props.products.find(
+                (product) => product.id === item.product_id
+            );
+            const total = product ? product.unit_price * item.quantity : 0;
+            return {
+                productId: item.product_id,
+                quantity: item.quantity,
+                price: product.unit_price,
+                total: total,
+            };
+        }) || [{ productId: "", quantity: 1, price: 0, total: 0 }];
     }
 });
 
-const emit = defineEmits(['order-saved']);
-
-const customerName = ref(props.order?.customerName || '');
-const contactNo = ref(props.order?.contactNo || '');
-const items = ref(props.order?.items || [{ productId: '', quantity: 1, price: 0, total: 0 }]);
-
 const totalAmount = computed(() => {
-    return items.value.reduce((sum, item) => sum + item.total, 0);
+    const totalAmount = items.value.reduce((sum, item) => sum + item.total, 0);
+
+    return totalAmount;
 });
 
 const addItem = () => {
-    items.value.push({ productId: '', quantity: 1, price: 0, total: 0 });
+    items.value.push({ productId: "", quantity: 1, price: 0, total: 0 });
 };
 
 const removeItem = (index) => {
@@ -37,22 +58,19 @@ const saveOrder = async () => {
         const orderData = {
             customer_name: customerName.value,
             contact_number: contactNo.value,
-            order_items: items.value.map(item => ({
-                product_id: item.productId,  // Ensure the key matches the backend expectation
+            order_items: items.value.map((item) => ({
+                product_id: item.productId,
                 quantity: item.quantity,
             })),
         };
 
-        const url = props.order 
-            ? `/api/order/${props.order.id}`
-            : '/api/order';
-        
-        const method = props.order ? 'put' : 'post';
-        
+        const url = props.order ? `/api/order/${props.order.id}` : "/api/order";
+        const method = props.order ? "put" : "post";
+
         await axios[method](url, orderData);
-        emit('order-saved');
+        emit("order-saved");
     } catch (error) {
-        console.error('Error saving order:', error);
+        console.error("Error saving order:", error);
     }
 };
 </script>
@@ -61,28 +79,30 @@ const saveOrder = async () => {
     <form @submit.prevent="saveOrder">
         <div class="mb-3">
             <label class="form-label" for="customer-name">Customer Name</label>
-            <input 
-                type="text" 
-                class="form-control" 
+            <input
+                type="text"
+                class="form-control"
                 v-model="customerName"
                 required
-            >
+            />
         </div>
 
         <div class="mb-3">
-            <label class="form-label" for="customer-number">Contact Number</label>
-            <input 
-                type="tel" 
-                class="form-control" 
+            <label class="form-label" for="customer-number"
+                >Contact Number</label
+            >
+            <input
+                type="tel"
+                class="form-control"
                 v-model="contactNo"
                 required
-            >
+            />
         </div>
 
         <div class="mb-4">
             <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5>Order Items</h5>
-                <button 
+                <button
                     type="button"
                     class="btn btn-sm btn-secondary"
                     @click="addItem"
@@ -104,7 +124,7 @@ const saveOrder = async () => {
                 :products="products"
                 :item="item"
                 :index="index"
-                @update:item="(newItem) => items[index] = newItem"
+                @update:item="(newItem) => (items[index] = newItem)"
                 @remove="removeItem"
             />
 
@@ -117,11 +137,11 @@ const saveOrder = async () => {
 
         <div class="text-end">
             <button type="submit" class="btn btn-primary">
-                {{ order ? 'Update' : 'Place' }} Order
+                {{ props.order ? "Update" : "Place" }} Order
             </button>
         </div>
     </form>
-</template> 
+</template>
 
 <style scoped>
 .row {
