@@ -1,8 +1,8 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import OrderForm from '../components/order/OrderForm.vue';
-import OrderTable from '../components/order/OrderTable.vue';
+import { ref, onMounted } from "vue";
+import axios from "axios";
+import OrderForm from "../components/order/OrderForm.vue";
+import OrderTable from "../components/order/OrderTable.vue";
 
 const orders = ref([]);
 const products = ref([]);
@@ -11,35 +11,41 @@ const isModalOpen = ref(false);
 
 const fetchOrders = async () => {
     try {
-        const response = await axios.get('/api/order');
+        const response = await axios.get("/api/order");
         orders.value = response.data;
     } catch (error) {
-        console.error('Error fetching orders:', error);
+        console.error("Error fetching orders:", error);
     }
 };
 
 const fetchProducts = async () => {
     try {
-        const response = await axios.get('/api/product');
+        const response = await axios.get("/api/product");
         products.value = response.data;
     } catch (error) {
-        console.error('Error fetching products:', error);
+        console.error("Error fetching products:", error);
     }
 };
 
-const editOrder = (order) => {
-    selectedOrder.value = order;
-    isModalOpen.value = true;
+const editOrder = async (order) => {
+    try {
+        const response = await axios.get(`/api/order/${order.id}`);
+        selectedOrder.value = response.data;
+    } catch (error) {
+        console.error("Error fetching order details:", error);
+    } finally {
+        isModalOpen.value = true;
+    }
 };
 
 const deleteOrder = async (orderId) => {
-    if (!confirm('Are you sure you want to delete this order?')) return;
-    
+    if (!confirm("Are you sure you want to delete this order?")) return;
+
     try {
         await axios.delete(`/api/order/${orderId}`);
         await fetchOrders();
     } catch (error) {
-        console.error('Error deleting order:', error);
+        console.error("Error deleting order:", error);
     }
 };
 
@@ -69,11 +75,7 @@ onMounted(() => {
             </button>
         </div>
 
-        <OrderTable 
-            :orders="orders"
-            @edit="editOrder"
-            @delete="deleteOrder"
-        />
+        <OrderTable :orders="orders" @edit="editOrder" @delete="deleteOrder" />
 
         <!-- Modal -->
         <Transition name="modal">
@@ -81,7 +83,7 @@ onMounted(() => {
                 <div class="modal-popup">
                     <div class="modal-header">
                         <h5 class="modal-title">
-                            {{ selectedOrder ? 'Edit Order' : 'New Order' }}
+                            {{ selectedOrder ? "Edit Order" : "New Order" }}
                         </h5>
                         <button
                             type="button"
@@ -92,7 +94,7 @@ onMounted(() => {
                         </button>
                     </div>
                     <div class="modal-body">
-                        <OrderForm 
+                        <OrderForm
                             :products="products"
                             :order="selectedOrder"
                             @order-saved="handleOrderSaved"
@@ -155,4 +157,4 @@ onMounted(() => {
 .modal-leave-from {
     opacity: 1;
 }
-</style> 
+</style>
