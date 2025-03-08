@@ -34,9 +34,11 @@ class OrderController extends Controller
 
         return response()->json(['message' => 'Order created successfully', 'order' => $order], 201);
     }
-    
+
     public function getOrder(Order $order)
     {
+        $order->order_items = json_decode($order->order_items, true);
+
         return response()->json($order);
     }
 
