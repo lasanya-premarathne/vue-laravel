@@ -3,6 +3,7 @@ import { ref, onMounted } from "vue";
 import axios from "axios";
 import ProductForm from "../components/product/ProductForm.vue";
 import ProductTable from "../components/product/ProductTable.vue";
+import CommonModal from "../components/common-components/CommonModal.vue";
 
 const products = ref([]);
 const selectedProduct = ref(null);
@@ -24,7 +25,7 @@ const editProduct = (product) => {
 
 const deleteProduct = async (productId) => {
     if (!confirm("Are you sure you want to delete this product?")) return;
-    
+
     try {
         await axios.delete(`/api/product/${productId}`);
         await fetchProducts();
@@ -56,17 +57,16 @@ const fetchCategories = async () => {
 };
 
 const getCategoryName = (categoryId) => {
-    const category = categories.value.find(cat => cat.id === categoryId);
-    return category ? category.name : 'Unknown Category';
+    const category = categories.value.find((cat) => cat.id === categoryId);
+    return category ? category.name : "Unknown Category";
 };
 
 onMounted(fetchProducts);
 onMounted(fetchCategories);
-
 </script>
 
 <template>
-    <div class="container">
+    <div>
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h1 class="text-primary">Product View</h1>
             <button class="btn btn-primary" @click="handleAddNew">
@@ -74,37 +74,18 @@ onMounted(fetchCategories);
             </button>
         </div>
 
-        <!-- Popup Modal -->
-        <Transition name="modal">
-            <div v-if="isModalOpen" class="modal-overlay">
-                <div class="modal-popup">
-                    <div class="modal-header">
-                        <h5 class="modal-title">
-                            {{
-                                selectedCategory
-                                    ? "Edit Category"
-                                    : "Add New Category"
-                            }}
-                        </h5>
-                        <button
-                            type="button"
-                            class="btn-close"
-                            @click="isModalOpen = false"
-                        >
-                            ×
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <ProductForm 
-                            :product="selectedProduct"
-                            @product-saved="handleProductSaved"
-                        />
-                    </div>
-                </div>
-            </div>
-        </Transition>
+        <CommonModal
+            :isOpen="isModalOpen"
+            :title="selectedProduct ? 'Edit Product' : 'Add New Product'"
+            @close="isModalOpen = false"
+        >
+            <ProductForm
+                :product="selectedProduct"
+                @product-saved="handleProductSaved"
+            />
+        </CommonModal>
 
-        <ProductTable 
+        <ProductTable
             :products="products"
             :categories="categories"
             @edit="editProduct"
@@ -112,61 +93,3 @@ onMounted(fetchCategories);
         />
     </div>
 </template>
-
-<style scoped>
-.container {
-    max-width: 900px;
-    margin: auto;
-}
-
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-}
-
-.modal-popup {
-    background: white;
-    border-radius: 8px;
-    padding: 20px;
-    width: 90%;
-    max-width: 500px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-.modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-}
-
-.modal-title {
-    margin: 0;
-    font-size: 1.25rem;
-}
-
-/* Modal transition animations */
-.modal-enter-active,
-.modal-leave-active {
-    transition: opacity 0.3s ease;
-}
-
-.modal-enter-from,
-.modal-leave-to {
-    opacity: 0;
-}
-
-.modal-enter-to,
-.modal-leave-from {
-    opacity: 1;
-}
-</style>
-
