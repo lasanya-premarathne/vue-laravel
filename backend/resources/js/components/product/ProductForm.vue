@@ -4,24 +4,18 @@ import axios from "axios";
 
 const props = defineProps({
     product: Object,
+    categories: {
+        type: Array,
+        required: true,
+        default: [],
+    },
 });
 
 const name = ref("");
 const unit_price = ref("");
 const description = ref("");
 const category_id = ref("");
-const categories = ref([]);
 const emit = defineEmits(["product-saved"]);
-
-// Fetch categories for the dropdown
-const fetchCategories = async () => {
-    try {
-        const response = await axios.get("/api/category");
-        categories.value = response.data;
-    } catch (error) {
-        console.error("Error fetching categories:", error);
-    }
-};
 
 watchEffect(() => {
     if (props.product) {
@@ -31,9 +25,6 @@ watchEffect(() => {
         category_id.value = props.product.category_id || "";
     }
 });
-
-// Fetch categories when component mounts
-fetchCategories();
 
 const saveProduct = async () => {
     try {
@@ -72,21 +63,50 @@ const saveProduct = async () => {
     <form @submit.prevent="saveProduct" class="mb-4">
         <div class="mb-3">
             <label class="form-label" for="product-name">Product Name</label>
-            <input v-model="name" type="text" class="form-control" id="product-name" required />
+            <input
+                v-model="name"
+                type="text"
+                class="form-control"
+                id="product-name"
+                required
+            />
         </div>
         <div class="mb-3">
             <label class="form-label" for="product-price">Unit Price</label>
-            <input v-model="unit_price" type="number" step="0.01" class="form-control" id="product-price" required />
+            <input
+                v-model="unit_price"
+                type="number"
+                step="0.01"
+                class="form-control"
+                id="product-price"
+                required
+            />
         </div>
         <div class="mb-3">
-            <label class="form-label" for="product-description">Description</label>
-            <input v-model="description" type="text" class="form-control" id="product-description" />
+            <label class="form-label" for="product-description"
+                >Description</label
+            >
+            <input
+                v-model="description"
+                type="text"
+                class="form-control"
+                id="product-description"
+            />
         </div>
         <div class="mb-3">
             <label class="form-label" for="product-category">Category</label>
-            <select v-model="category_id" class="form-control" id="product-category" required>
+            <select
+                v-model="category_id"
+                class="form-control"
+                id="product-category"
+                required
+            >
                 <option value="">Select a category</option>
-                <option v-for="category in categories" :key="category.id" :value="category.id">
+                <option
+                    v-for="category in categories"
+                    :key="category.id"
+                    :value="category.id"
+                >
                     {{ category.name }}
                 </option>
             </select>
@@ -95,4 +115,4 @@ const saveProduct = async () => {
             {{ product?.id ? "Update" : "Add" }} Product
         </button>
     </form>
-</template> 
+</template>

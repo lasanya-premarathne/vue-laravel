@@ -21,6 +21,7 @@ const fetchProducts = async () => {
 
 const editProduct = (product) => {
     selectedProduct.value = product;
+    isModalOpen.value = true;
 };
 
 const deleteProduct = async (productId) => {
@@ -81,6 +82,7 @@ onMounted(fetchCategories);
         >
             <ProductForm
                 :product="selectedProduct"
+                :categories="categories"
                 @product-saved="handleProductSaved"
             />
         </CommonModal>
