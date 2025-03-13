@@ -57,11 +57,6 @@ const fetchCategories = async () => {
     }
 };
 
-const getCategoryName = (categoryId) => {
-    const category = categories.value.find((cat) => cat.id === categoryId);
-    return category ? category.name : "Unknown Category";
-};
-
 onMounted(fetchProducts);
 onMounted(fetchCategories);
 </script>
@@ -74,6 +69,13 @@ onMounted(fetchCategories);
                 Add New Product
             </button>
         </div>
+        
+        <ProductTable
+            :products="products"
+            :categories="categories"
+            @edit="editProduct"
+            @delete="deleteProduct"
+        />
 
         <CommonModal
             :isOpen="isModalOpen"
@@ -86,12 +88,5 @@ onMounted(fetchCategories);
                 @product-saved="handleProductSaved"
             />
         </CommonModal>
-
-        <ProductTable
-            :products="products"
-            :categories="categories"
-            @edit="editProduct"
-            @delete="deleteProduct"
-        />
     </div>
 </template>

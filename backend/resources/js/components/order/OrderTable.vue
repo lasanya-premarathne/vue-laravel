@@ -1,50 +1,29 @@
 <script setup>
-import { defineProps, defineEmits } from 'vue';
+import { defineProps, defineEmits } from "vue";
+import CommonTable from "../common-components/CommonTable.vue";
 
 const props = defineProps({
     orders: {
         type: Array,
-        required: true
-    }
+        required: true,
+    },
 });
 
-const emit = defineEmits(['edit', 'delete']);
+const emit = defineEmits(["edit", "delete"]);
+
+const columns = [
+    { key: "id", label: "Order ID" },
+    { key: "customer_name", label: "Customer Name" },
+    { key: "contact_number", label: "Contact No" },
+    { key: "total", label: "Total Amount" },
+];
 </script>
 
 <template>
-    <div class="table-responsive">
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Order ID</th>
-                    <th>Customer Name</th>
-                    <th>Contact No</th>
-                    <th>Total Amount</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="order in orders" :key="order.id">
-                    <td>{{ order.id }}</td>
-                    <td>{{ order.customer_name }}</td>
-                    <td>{{ order.contact_number }}</td>
-                    <td>${{ order.total }}</td>
-                    <td>
-                        <button 
-                            @click="emit('edit', order)"
-                            class="btn btn-sm btn-primary me-2"
-                        >
-                            Edit
-                        </button>
-                        <button 
-                            @click="emit('delete', order.id)"
-                            class="btn btn-sm btn-danger"
-                        >
-                            Delete
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-</template> 
+    <CommonTable
+        :columns="columns"
+        :data="orders"
+        :editAction="(order) => emit('edit', order)"
+        :deleteAction="(orderId) => emit('delete', orderId)"
+    />
+</template>

@@ -50,6 +50,12 @@ const handleAddNew = () => {
             </button>
         </div>
 
+        <CategoryTable
+            :categories="categories"
+            @refresh="fetchCategories"
+            @edit-category="handleEditCategory"
+        />
+
         <CommonModal
             :isOpen="isModalOpen"
             :title="selectedCategory ? 'Edit Category' : 'Add New Category'"
@@ -60,11 +66,5 @@ const handleAddNew = () => {
                 @category-saved="handleCategorySaved"
             />
         </CommonModal>
-
-        <CategoryTable
-            :categories="categories"
-            @refresh="fetchCategories"
-            @edit-category="handleEditCategory"
-        />
     </div>
 </template>
