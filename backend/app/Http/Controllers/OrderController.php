@@ -63,8 +63,12 @@ class OrderController extends Controller
 
     public function deleteOrder(Order $order)
     {
-        $order->delete();
-        return response()->json(null, 204);
+        try {
+            $order->delete();
+            return response()->json(['message' => 'Order deleted successfully']);
+        } catch (Exception $e) {
+            return response()->json(['error' => 'An error occurred while deleting the order', 'message' => $e->getMessage()], 500);
+        }
     }
 
 
