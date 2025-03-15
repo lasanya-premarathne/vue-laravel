@@ -16,4 +16,4 @@
     <body class="antialiased">
         <div id="app"></div>
     </body>
-</html> 
+</html>

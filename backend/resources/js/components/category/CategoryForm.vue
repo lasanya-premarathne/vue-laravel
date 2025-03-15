@@ -1,5 +1,5 @@
 <script setup>
-import { ref, defineEmits, watchEffect } from "vue";
+import { ref, watchEffect } from "vue";
 import axios from "axios";
 
 const props = defineProps({
