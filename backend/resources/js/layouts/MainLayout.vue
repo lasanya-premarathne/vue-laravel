@@ -13,20 +13,40 @@ const menuItems = ref([
 </script>
 
 <template>
-    <div class="layout-wrapper">
-        <Header />
-        <div class="content-wrapper">
-            <MenuBar :menuItems="menuItems" />
-            <main class="main-content">
-                <router-view :key="$route.fullPath"></router-view>
-            </main>
+    <!-- <div id="main-wrapper"> -->
+        <div class="nav-header">
+            <a href="/" class="brand-logo">
+                <img class="logo-abbr" src="../../../public/theme/images/logo.png" alt="">
+                <img class="logo-compact" src="../../../public/theme/images/logo-text.png" alt="">
+                <img class="brand-title" src="../../../public/theme/images/logo-text.png" alt="">
+            </a>
+
+            <div class="nav-control">
+                <div class="hamburger">
+                    <span class="line"></span><span class="line"></span
+                    ><span class="line"></span>
+                </div>
+            </div>
         </div>
-        <Footer />
-    </div>
+
+        <Header />
+
+        <MenuBar :menuItems="menuItems" />
+
+        <div class="content-body">
+            <div class="container-fluid">
+                <main>
+                    <router-view :key="$route.fullPath"></router-view>
+                </main>
+            </div>
+        </div>
+
+        <Footer/>
+    <!-- </div> -->
 </template>
 
 <style scoped>
-.layout-wrapper {
+/* .layout-wrapper {
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -40,5 +60,5 @@ const menuItems = ref([
 .main-content {
     flex: 1;
     padding: 2rem;
-}
+} */
 </style>

@@ -22,4 +22,12 @@ export default defineConfig({
             vue: 'vue/dist/vue.esm-bundler.js',
         },
     },
+    server: {
+        fs: {
+          allow: ['resources', 'node_modules', 'public'],
+        },
+    },
+    build: {
+        sourcemap: false
+    }
 });

@@ -1,4 +1,7 @@
-<script setup></script>
+<script setup>
+import "../../public/theme/css/style.css"
+import "../../public/theme/scss/main.scss"
+</script>
 
 <template>
     <div id="app">
