@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,14 @@ use App\Http\Controllers\CategoryController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// to make it render the vues and not blades
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
 
 // category blades
 Route::get('/category', [CategoryController::class, 'index'])->name('category.index');
