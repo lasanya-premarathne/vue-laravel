@@ -1,5 +1,5 @@
 <script setup>
-import { defineProps, defineEmits, computed } from "vue";
+import { computed } from "vue";
 import CommonTable from "../common-components/CommonTable.vue";
 
 const props = defineProps({

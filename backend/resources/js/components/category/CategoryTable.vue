@@ -1,5 +1,4 @@
 <script setup>
-import { defineProps, defineEmits } from "vue";
 import axios from "axios";
 import CommonTable from "../common-components/CommonTable.vue";
 

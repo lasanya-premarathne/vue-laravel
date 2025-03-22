@@ -64,3 +64,36 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+======================================================================
+Downloaded php:
+    https://www.php.net/downloads.php 
+Added php installation folder to path variables
+Downloaded composer:
+    https://getcomposer.org/download/
+Installed laravel:
+     composer global require laravel/installer
+
+Create vue project
+     npm create vite@latest <project name>
+
+Create laravel project
+     laravel new <project name>
+
+Press Win + R, type sysdm.cpl, and press Enter.
+Go to Advanced > Environment Variables.
+Under System Variables, find and select Path, then click Edit.
+Click New, and paste the path from Step 1 (e.g., C:\Users\YourUsername\AppData\Roaming\Composer\vendor\bin).
+Click OK, then OK again.
+
+
+Laravel CRUD in 50 minutes for Beginners  from Scratch
+    https://codecourse.com/articles/how-to-add-vuejs-to-a-laravel-application 
+
+Start the project
+npm run dev -  to run the frontend
+php artisan serve - to run the backend
+win + R -> services.msc ->find mysql80 -> right click-> start - starting the mysql server
+mysql -u root -p -> enter the password -  to connect to the database
+======================================================================
