@@ -13,7 +13,7 @@ const menuItems = ref([
 </script>
 
 <template>
-    <!-- <div id="main-wrapper"> -->
+    <div id="main-wrapper">
         <div class="nav-header">
             <a href="/" class="brand-logo">
                 <img class="logo-abbr" src="../../../public/theme/images/logo.png" alt="">
@@ -35,14 +35,12 @@ const menuItems = ref([
 
         <div class="content-body">
             <div class="container-fluid">
-                <main>
-                    <router-view :key="$route.fullPath"></router-view>
-                </main>
+                <router-view :key="$route.fullPath"></router-view>
             </div>
         </div>
 
         <Footer/>
-    <!-- </div> -->
+    </div>
 </template>
 
 <style scoped>

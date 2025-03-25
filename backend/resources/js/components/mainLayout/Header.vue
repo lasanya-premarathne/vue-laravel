@@ -1,7 +1,4 @@
 <template>
-    <!-- <header class="header">
-        <h1>Admin Panel</h1>
-    </header> -->
     <div class="header">
             <div class="header-content">
                 <nav class="navbar navbar-expand">
